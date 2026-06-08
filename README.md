@@ -1,5 +1,4 @@
 # AI-support-system
-# My Country Mobile AI Assistant
 
 An AI-powered customer support assistant built using n8n, Hugging Face, JavaScript, and Vercel. The application allows users to interact with an AI assistant, generate AI-powered responses, request human support, and automate backend workflows through n8n.
 
