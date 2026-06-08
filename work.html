@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>My Country Mobile | Elevated Support Hub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="brand">
+                <div class="brand-logo-wrapper">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 2v4"/>
+                        <path d="M12 18v4"/>
+                        <path d="M4.93 4.93l2.83 2.83"/>
+                        <path d="M16.24 16.24l2.83 2.83"/>
+                        <path d="M2 12h4"/>
+                        <path d="M18 12h4"/>
+                        <path d="M4.93 19.07l2.83-2.83"/>
+                        <path d="M16.24 7.76l2.83-2.83"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h2>My Country Mobile</h2>
+                    <p>AI Support Hub</p>
+                    <div class="header-status" id="headerStatus">
+                        <span class="status-dot"></span>
+                        <span>Online</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button type="button" class="clear-btn" id="clearChatBtn" aria-label="Clear conversation">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                        <path d="M21 3v5h-5"/>
+                        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                        <path d="M3 21v-5h5"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="mode-switch" id="modeSwitch">
+            <div class="mode-slider"></div>
+            <button type="button" class="mode-option active" id="queryModeBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3v1"/>
+                    <path d="M12 20v1"/>
+                    <path d="M3 12h1"/>
+                    <path d="M20 12h1"/>
+                    <path d="M18.364 5.636l-.707.707"/>
+                    <path d="M6.343 17.657l-.707.707"/>
+                    <path d="M5.636 5.636l.707.707"/>
+                    <path d="M17.657 17.657l.707.707"/>
+                    <path d="M9.818 9.818L12 6.5l2.182 3.318L17.5 12l-3.318 2.182L12 17.5l-2.182-3.318L6.5 12z"/>
+                </svg>
+                Ask AI Assistant
+            </button>
+            <button type="button" class="mode-option" id="imageModeBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 14.7255 3.09032 17.1962 4.85857 19"/>
+                    <path d="M6 14C6.5 13 8 12.5 9.5 13C11 13.5 12 15 12.5 16.5C13 18 12.5 19.5 11.5 20"/>
+                    <circle cx="7.5" cy="10.5" r="1.5"/>
+                    <circle cx="11.5" cy="7.5" r="1.5"/>
+                    <circle cx="16.5" cy="9.5" r="1.5"/>
+                    <circle cx="15.5" cy="14.5" r="1.5"/>
+                </svg>
+                Image Generator
+            </button>
+        </div>
+
+        <div class="mode-hint">
+            <span class="mode-badge" id="modeBadge">⚡ AI Assistant active</span>
+            <span id="modeSubHint">Instant smart replies • knowledge base</span>
+        </div>
+
+        <div class="chat-box-viewport">
+            <div class="chat-box-wrapper">
+                <div id="chatBoxQuery" class="chat-box"></div>
+                
+                <div id="imageGenContainer" class="image-gen-container">
+                    <div class="image-gen-header">
+                        <h3>AI Image Generator</h3>
+                        <p>Describe your scene below. The webhook returns a JSON image URL when generation completes.</p>
+                    </div>
+                    
+                    <form id="imageSupportForm" class="image-gen-form">
+                        <div class="image-prompt-wrapper">
+                            <label for="imagePromptInput">Text Prompt</label>
+                            <textarea id="imagePromptInput" rows="3" placeholder="A futuristic digital artwork of a spacesuit astronaut standing on a purple neon planet, cyberpunk details..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="generate-image-btn" id="generateImageBtn">
+                            <span>Generate Masterpiece</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;">
+                                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                                <circle cx="12" cy="12" r="4"/>
+                            </svg>
+                        </button>
+                    </form>
+                    
+                    <div class="image-preview-area" id="imagePreviewArea">
+                        <div class="image-preview-placeholder" id="imagePreviewPlaceholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <polyline points="21 15 16 10 5 21"/>
+                            </svg>
+                            <p>Your generated artwork will appear here</p>
+                        </div>
+                        <img id="generatedImageResult" class="generated-image-result" alt="AI Generated Artwork">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <form id="chatForm" class="chat-form" novalidate>
+                <div class="input-meta">
+                    <span class="kbd-hint"><kbd>Enter</kbd> send · <kbd>Shift</kbd>+<kbd>Enter</kbd> new line</span>
+                    <span class="char-counter" id="charCounter">0 / 2000</span>
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" id="messageInput" placeholder="Ask about VoIP, routing, pricing…" autocomplete="off" maxlength="2000" aria-label="Message to AI assistant">
+                    <button type="submit" class="send-btn" id="sendBtn" aria-label="Send message">
+                        Send
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <line x1="22" y1="2" x2="11" y2="13"/>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="floating-chat-bubble" id="floatingChatBubble" role="button" tabindex="0" aria-label="Open email support ticket form">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-open">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-close" style="display:none;">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+        <span class="bubble-pulse"></span>
+    </div>
+
+    <div class="floating-chat-widget" id="floatingChatWidget">
+        <div class="floating-chat-header">
+            <div class="agent-avatar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                <span class="active-dot"></span>
+            </div>
+            <div class="agent-info">
+                <h4>Email Support Desk</h4>
+                <p>Submit Ticket • 24/7 Queue</p>
+            </div>
+            <button type="button" class="close-widget-btn" id="closeWidgetBtn" aria-label="Close support mailer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        
+        <div id="emailFormContainer" class="email-form-container">
+            <form id="emailSupportForm" class="email-form">
+                <h3>Submit a Support Ticket</h3>
+                <p>Have an inquiry? Fill in the details below, and our engineering team will get back to you shortly.</p>
+                
+                <div class="form-group">
+                    <label for="emailName">Full Name</label>
+                    <input type="text" id="emailName" placeholder="Your name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="emailAddress">Email Address</label>
+                    <input type="email" id="emailAddress" placeholder="you@company.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="emailSubject">Subject</label>
+                    <input type="text" id="emailSubject" placeholder="Inquiry subject" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="emailMessage">Message Details</label>
+                    <textarea id="emailMessage" rows="5" placeholder="How can we help you?" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-email-btn" id="submitEmailBtn">
+                    <span>Submit Ticket</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"/>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
